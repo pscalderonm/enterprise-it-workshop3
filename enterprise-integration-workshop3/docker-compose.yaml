@@ -1,0 +1,9 @@
+version: '3.6'
+services:
+  eip-router:
+    image: msoft/workshop3-eip-router:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"

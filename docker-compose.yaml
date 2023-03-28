@@ -1,0 +1,50 @@
+version: '3.6'
+services:
+
+  workshop3-crm-123:
+    image: msoft/workshop3-crm-system-123:latest
+    build: ./workshop3-business-123-system
+    hostname: crm-123
+    container_name: crm-123
+    ports:
+      - "8082:8080"
+
+  workshop3-crm-abc:
+    image: msoft/workshop3-crm-system-abc:latest
+    build: ./workshop3-business-abc-system
+    hostname: crm-abc
+    container_name: crm-abc
+    ports:
+      - "8081:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  workshop3-eip-router:
+    image: msoft/workshop3-eip-router:latest
+    build: ./enterprise-integration-workshop3
+    container_name: eip-router
+    environment:
+      - SERVICE_SYSTEM123HOST=crm-123:8080
+      - SERVICE_SYSTEMABCHOST=crm-abc:5000
+    depends_on:
+      - workshop3-crm-abc
+      - workshop3-crm-123
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:8080/actuator || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 3s
+
+  crm-emulator-sender:
+    image: msoft/workshop3-emulator-sender:latest
+    build: ./crm-emulator-sender
+    container_name: emulator
+    environment:
+      - CRM_SERVICE_URL=http://eip-router:8080/clients/transfer
+    depends_on:
+      workshop3-eip-router:
+        condition: service_healthy
+    

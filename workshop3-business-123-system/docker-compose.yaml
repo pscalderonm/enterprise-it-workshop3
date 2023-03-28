@@ -1,0 +1,9 @@
+version: '3.6'
+services:
+  crm-system-123:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: msoft/workshop3-crm-system-123:latest
+    ports:
+      - "8082:8080"

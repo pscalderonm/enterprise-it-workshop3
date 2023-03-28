@@ -1,0 +1,11 @@
+version: '3.6'
+services:
+  crm-system-abc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: msoft/workshop3-crm-system-abc:latest
+    ports:
+      - "8081:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
