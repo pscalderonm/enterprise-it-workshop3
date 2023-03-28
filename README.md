@@ -31,3 +31,23 @@ These environment variables must be specified for the main process to run succes
 
 - __SERVICE_SYSTEM123HOST__=localhost:8080
 - __SERVICE_SYSTEMABCHOST__=localhost:5000
+
+## To check functionality
+
+- Access to `http://localhost:8081/swagger/index.html` for system ABC and to
+`http://localhost:8082/docs` for system 123.
+- Execute a GET call to /Clients endpoint to check loaded registers.
+
+__Process running from terminal__
+![Process running from terminal](assets/terminal-running-process.png)
+
+__Swagger from system ABC__
+![Swagger from system ABC](assets/swagger-system-abc.png)
+
+__Swagger from system 123__
+![Swagger from system ABC](assets/swagger-system-123.png)
+
+## To clean up
+
+> `docker-compose down`
+
